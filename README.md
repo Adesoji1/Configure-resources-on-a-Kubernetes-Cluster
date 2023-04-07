@@ -198,7 +198,7 @@ values.yaml: Contains default configuration values that can be overwritten durin
 templates: A directory containing one or more Kubernetes manifest files (like deployment.yaml and service.yaml) that define the Kubernetes resources to be deployed.
 Helm can help you manage the complexity of deploying and updating applications by automating the process and providing a versioning mechanism for your releases. Here's how you can use Helm in your current scenario:
 
-Install Helm by following the instructions for your specific operating system: [Helm Installation]:<https://helm.sh/docs/intro/install>
+Install Helm by following the instructions for your specific operating system:[Here](https://helm.sh/docs/intro/install)
 
 Create a Helm chart for your application by running the following command:
 
