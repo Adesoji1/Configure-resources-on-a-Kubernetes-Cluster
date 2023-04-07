@@ -404,4 +404,6 @@ Now, you can access the website at <http://localhost:8080>. or Then, you can acc
 
 Keep in mind that port forwarding is not a long-term solution for exposing services to external users, as it creates a direct connection between your machine and the Kubernetes resource, bypassing any security mechanisms provided by services, ingresses, or network policies. It's best used for temporary access, testing, or debugging purposes. For production scenarios, it's recommended to use LoadBalancer, NodePort, or Ingress resources to expose your applications.
 
- The End :smile:
+## More Tasks for creating kuberenetes resources is found in the Tasks/Tasks.md directory
+
+The End :smile:

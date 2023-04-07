@@ -1,0 +1,18 @@
+# database.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+    containers:
+      - name: redis
+        image: redis:latest

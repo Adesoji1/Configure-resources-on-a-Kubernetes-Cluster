@@ -1,0 +1,10 @@
+# pod1.yaml
+#1.Create a pod named pod1 that contains an nginx Docker container image:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+containers:
+  - name: nginx
+    image: nginx:latest

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod3
+  namespace: finance
+  labels:
+    app: accounting
+spec:
+containers:
+  - name: redis
+    image: redis:latest

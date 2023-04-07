@@ -1,0 +1,11 @@
+# pod2.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2
+  labels:
+    os: alpine
+spec:
+containers:
+  - name: httpd
+    image: httpd:alpine
