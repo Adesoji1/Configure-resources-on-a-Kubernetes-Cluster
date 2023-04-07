@@ -12,36 +12,72 @@ macOS:
 
 You can use Homebrew to install kubectl:
 
-`brew install kubectl`
+```markdown
+brew install kubectl
+
+```
 
 Or, you can install kubectl using the following curl command:
 
+```markdown
 curl -LO "<https://storage.googleapis.com/kubernetes-release/release/$(curl> -s <https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl>"
+
+```
+
+```markdown
 chmod +x ./kubectl
+
+```
+
+```markdown
 sudo mv ./kubectl /usr/local/bin/kubectl
 
-Windows:
+```
+
+`Windows:`
 
 You can use Chocolatey to install kubectl:
 
-`choco install kubernetes-cli`
+```markdown
+choco install kubernetes-cli
+
+```
+
 Alternatively, you can download the latest release with this command:
 
+```markdown
 curl -LO <https://storage.googleapis.com/kubernetes-release/release/$(curl> -s <https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/windows/amd64/kubectl.exe>
+
+```
 
 Then, add the binary in to your PATH.
 
-Linux:
+`Linux:`
 
 You can install kubectl using the following curl command:
 
+```markdown
 curl -LO "<https://storage.googleapis.com/kubernetes-release/release/$(curl> -s <https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl>"
+
+```
+
+```markdown
 chmod +x ./kubectl
+
+```
+
+```markdown
 sudo mv ./kubectl /usr/local/bin/kubectl
+
+```
 
 After installation, you can verify that kubectl is installed by running:
 
+```markdown
 kubectl version --client
+
+```
+
 If you don't want to install kubectl locally, you can use an alternative like Kubernetes Dashboard or Lens IDE to manage your cluster. However, kubectl is widely used, and it's recommended to have it installed for managing Kubernetes clusters efficiently.
 
 ```markdown
@@ -49,19 +85,35 @@ If you don't want to install kubectl locally, you can use an alternative like Ku
 
 ```
 
-$$
+```markdown
 kubectl get nodes
+
+```
+
+```markdown
 kubectl get namespaces
+
+```
+
+```markdown
 kubectl cluster-info
-$$
+
+```
 
 ```markdown
 2. Create cluster resources
 
 ```
 
+```markdown
 kubectl apply -f deployment.yaml
+
+```
+
+```markdown
 kubectl apply -f service.yaml
+
+```
 
 ```markdown
 3. Organize cluster resources in a namespace
@@ -70,20 +122,28 @@ kubectl apply -f service.yaml
 
 ## Create a new namespace
 
+```markdown
 kubectl create namespace kubenamespace
+
+```
 
 ## Update the YAML files to include the namespace
 
-## Add the following line under the `metadata` section in both `deployment.yaml` and `service.yaml`
+## Add the following line under the metadata section in both deployment.yaml and service.yaml
 
 namespace: kubenamespace
 
 ## Apply the updated YAML files
 
-$$
+```markdown
 kubectl apply -f deployment.yaml
+
+```
+
+```markdown
 kubectl apply -f service.yaml
-$$
+
+```
 
 ```markdown
 4. Update cluster resources
@@ -96,7 +156,10 @@ image: nginx:1.19.10
 
 ## Apply the updated YAML file
 
+```markdown
 kubectl apply -f deployment.yaml
+
+```
 
 ```markdown
 5. Roll back a Deployment
@@ -105,11 +168,17 @@ kubectl apply -f deployment.yaml
 
 ## Check the rollout history
 
+```markdown
 kubectl rollout history deployment/nginx-deployment -n kubenamespace
+
+```
 
 ## Roll back to the previous revision
 
+```markdown
 kubectl rollout undo deployment/nginx-deployment -n kubenamespace
+
+```
 
 It's a good practice to set resource limits for containers in a Kubernetes deployment to avoid resource starvation for other processes. You can set resource limits by adding the `resources` field with limits and `requests` subfields under the container definition. Here's an example of how to set resource limits for CPU and memory in your `deployment.yaml` file:
 
@@ -133,15 +202,18 @@ Install Helm by following the instructions for your specific operating system: [
 
 Create a Helm chart for your application by running the following command:
 
+```markdown
 helm create nginx-chart
+
+```
 
 This command creates a directory named `nginx-chart` with the following structure:
 
-nginx-chart/
-  Chart.yaml
-  values.yaml
-  charts/
-  templates/
+1. nginx-chart/
+2. Chart.yaml
+3. values.yaml
+4. charts/
+5. templates/
 
 Replace the contents of `nginx-chart/templates/deployment.yaml` and `nginx-chart/templates/service.yaml` with your deployment and service manifests.
 
@@ -149,25 +221,36 @@ Modify the `nginx-chart/values.yaml` file to define any configurable parameters 
 
 Package the Helm chart:
 
+```markdown
 helm package nginx-chart
+
+```
 
 This command creates a (`nginx-chart-0.1.0.tgz`) file in the current directory containing your helm chart.
 
 To install the Helm chart on your Kubernetes cluster, use the helm install command:
 
+```markdown
 helm install my-nginx-release nginx-chart-0.1.0.tgz
+
+```
 
 To update your application, modify the templates or values in your Helm chart, increase the version in `Chart.yaml`, re-package the chart, and then use `helm upgrade` to apply the changes:
 
-helm upgrade my-nginx-release nginx-chart-0.1.1.tgz
+`helm upgrade my-nginx-release nginx-chart-0.1.1.tgz`
 
 To uninstall the Helm chart, use the helm uninstall command:
 
-helm uninstall my-nginx-release
+```markdown
+helm uninstall my-nginx-release 
+
+```
 
 If you need to roll back a release, use the helm rollback command:
 
+```markdown
 helm rollback my-nginx-release 1
+```
 
 This command rolls back the release to the previous version.
 
@@ -183,11 +266,11 @@ Open the nginx-chart/values.yaml file in a text editor.
 
 Add the parameters you want to make configurable. For example, let's make the replica count, the container image, and the container port configurable:
 
-replicaCount: 3
-image:
-  repository: nginx
-  tag: 1.14.2
-containerPort: 80
+- replicaCount: 3
+- image:
+- repository: nginx
+- tag: 1.14.2
+- containerPort: 80
 
 Save and close the values.yaml file.
 
@@ -195,6 +278,7 @@ Now, open the nginx-chart/templates/deployment.yaml file in a text editor.
 
 Replace the hardcoded values with the configurable parameters using the {{ .Values.parameterName }} syntax. For example, replace the replica count, the container image, and the container port with the values from the values.yaml file:
 
+```markdown
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -214,23 +298,32 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - containerPort: {{ .Values.containerPort }}
+```
 
 Save and close the deployment.yaml file.
 Now, when you install or upgrade your Helm chart, you can provide different values for these parameters using the --set flag, or by creating a custom values.yaml file and passing it with the -f flag. For example, to change the replica count and container port during installation:
 
+```markdown
 helm install my-nginx-release nginx-chart-0.1.0.tgz --set replicaCount=5,containerPort=8080
+```
 
 Or, create a custom values.yaml file with your desired settings:
 
+```markdown
 replicaCount: 5
 image:
   repository: nginx
   tag: 1.14.2
 containerPort: 8080
+```
 
-Then, install the Helm chart using this custom values.yaml file
+Then, install the Helm chart using this custom values.yaml file below
+
+```markdown
 
 helm install my-nginx-release nginx-chart-0.1.0.tgz -f my-custom-values.yaml
+
+```
 
 By making parameters configurable in your Helm chart, you can more easily deploy different configurations of your application without modifying the Kubernetes manifests directly.
 
@@ -242,6 +335,7 @@ Open the nginx-chart/templates/service.yaml file in a text editor.
 
 Modify the spec section of the Service to use the LoadBalancer or NodePort type. Here's an example using LoadBalancer:
 
+```markdown
 apiVersion: v1
 kind: Service
 metadata:
@@ -253,18 +347,23 @@ spec:
       targetPort: {{ .Values.containerPort }}
   selector:
     app: {{ include "nginx-chart.fullname" . }}
+```
 
 Note that you should replace {{ .Values.containerPort }} with the actual port number if you haven't defined it in your values.yaml file.
 
 Save and close the service.yaml file.
 
-Update your Helm chart version in Chart.yaml, package the chart, and then upgrade the release:
+Update your Helm chart version in Chart.yaml, package the chart, and then upgrade the release with the command below:
 
+```markdown
 helm upgrade my-nginx-release nginx-chart-0.1.1.tgz
+```
 
 Get the external IP address (for LoadBalancer type) or the node IP and port (for NodePort type) of your Service:
 
+```markdown
 kubectl get services
+```
 
 This command will display a list of services running in your cluster. Look for the external IP address (in the EXTERNAL-IP column) if you're using a LoadBalancer, or the node port (in the PORT(S) column, after the colon) if you're using a NodePort.
 
@@ -304,3 +403,5 @@ Now, you can access the website at <http://localhost:8080>. or Then, you can acc
 <http://localhost:8080>
 
 Keep in mind that port forwarding is not a long-term solution for exposing services to external users, as it creates a direct connection between your machine and the Kubernetes resource, bypassing any security mechanisms provided by services, ingresses, or network policies. It's best used for temporary access, testing, or debugging purposes. For production scenarios, it's recommended to use LoadBalancer, NodePort, or Ingress resources to expose your applications.
+
+ The End :smile:
