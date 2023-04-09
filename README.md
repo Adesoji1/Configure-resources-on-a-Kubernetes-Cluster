@@ -1,4 +1,4 @@
-# Configure resources on a Kubernetes Cluster
+# Configure resources on a Kubernetes Cluster : Turing AWS Devops Test :smile:
 
 In this challenge, you will deploy resources in a Kubernetes cluster. First, you will retrieve information about the cluster. Next, you will create cluster resources, and then you will organize cluster resources in a namespace. Finally, you will update cluster resources, and then you will roll back a Deployment.
 write the correct manifest files too
