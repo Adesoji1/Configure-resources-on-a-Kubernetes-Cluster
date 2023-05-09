@@ -12,7 +12,7 @@ macOS:
 
 You can use Homebrew to install kubectl:
 
-```markdown
+```console markdown
 brew install kubectl
 
 ```
